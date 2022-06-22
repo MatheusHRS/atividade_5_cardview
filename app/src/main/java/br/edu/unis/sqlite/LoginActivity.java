@@ -11,6 +11,24 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+public long deleteUser(long id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+
+            db.beginTransaction();
+            String where = "id=" + id;
+            id = db.delete(DB_TABLE, where , null);
+            db.setTransactionSuccessful();
+
+            Log.i("USER_DELETED","ID: " + id);
+        } catch (SQLException e) {
+            Log.e("ERROR_USER_DELETED", "updateUser: " + e.getMessage(), e);
+        } finally {
+            if (db.isOpen()) db.endTransaction();
+        }
+        return id;
+    }
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText edtUser;
